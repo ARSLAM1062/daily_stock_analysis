@@ -331,6 +331,11 @@ jobs:
           SEARXNG_BASE_URLS: ${{ vars.SEARXNG_BASE_URLS || secrets.SEARXNG_BASE_URLS }}
           SEARXNG_PUBLIC_INSTANCES_ENABLED: ${{ vars.SEARXNG_PUBLIC_INSTANCES_ENABLED || secrets.SEARXNG_PUBLIC_INSTANCES_ENABLED }}
           SEARXNG_TIMEOUT_SECONDS: ${{ vars.SEARXNG_TIMEOUT_SECONDS || secrets.SEARXNG_TIMEOUT_SECONDS }}
+          # 免密钥资讯源（NewsNow）：无需任何 API Key，用于填充「最新动态 / 舆情」真实信源
+          NEWS_INTEL_AUTO_FETCH_ENABLED: ${{ vars.NEWS_INTEL_AUTO_FETCH_ENABLED || secrets.NEWS_INTEL_AUTO_FETCH_ENABLED }}
+          NEWS_INTEL_FETCH_TIMEOUT_SEC: ${{ vars.NEWS_INTEL_FETCH_TIMEOUT_SEC || secrets.NEWS_INTEL_FETCH_TIMEOUT_SEC }}
+          NEWS_INTEL_MAX_ITEMS_PER_SOURCE: ${{ vars.NEWS_INTEL_MAX_ITEMS_PER_SOURCE || secrets.NEWS_INTEL_MAX_ITEMS_PER_SOURCE }}
+          NEWSNOW_BASE_URL: ${{ vars.NEWSNOW_BASE_URL || secrets.NEWSNOW_BASE_URL }}
           MX_APIKEY: ${{ secrets.MX_APIKEY }}
           MX_PRIORITY: ${{ vars.MX_PRIORITY || secrets.MX_PRIORITY }}
           
@@ -529,6 +534,7 @@ jobs:
               echo "  SearXNG Public Instances: ✅ 已启用"
               ;;
           esac
+          echo "  NewsNow 资讯池: $([ "${NEWS_INTEL_AUTO_FETCH_ENABLED,,}" = "true" ] && echo "✅ 已启用 (${NEWSNOW_BASE_URL:-默认实例})" || echo '⚪ 未启用（免密钥资讯源，建议开启）')"
           echo ""
           echo "【通知渠道】"
           echo "  PushPlus: $([ -n "$PUSHPLUS_TOKEN" ] && echo '✅ 已配置' || echo '⚪ 未配置')"
